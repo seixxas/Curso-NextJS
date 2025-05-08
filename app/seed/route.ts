@@ -5,6 +5,13 @@ import { invoices, customers, revenue, users } from '../lib/placeholder-data';
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 async function seedUsers() {
+  if (process.env.NODE_ENV === 'development') {
+    // ... código de seed de usuários com bcrypt
+  } else {
+    console.log('Seeding de usuários pulado em produção.');
+    return [];
+  }
+
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
   await sql`
     CREATE TABLE IF NOT EXISTS users (
